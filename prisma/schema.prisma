@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String
+  phone    String
+  password String
+}
+
+model About {
+  id             Int      @id @default(autoincrement())
+  title          String
+  paragraph      String   @db.Text
+  imageUrl       String
+  missionTitle   String
+  missionContent String   @db.Text
+  visionTitle    String
+  visionContent  String   @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model TimelineItem {
+  id          Int      @id @default(autoincrement())
+  year        String
+  description String   @db.Text
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String?
+  domain    String?
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model ContactInfo {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  email     String
+  fax       String
+  address   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceHero {
+  id        Int      @id @default(autoincrement())
+  title     String
+  paragraph String   @db.Text
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceItem {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  description String   @db.Text
+  imageUrl    String   @db.LongText
+  category    String?  @default("Architecture")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ServiceSummary {
+  id         Int      @id @default(autoincrement())
+  imageUrl   String
+  paragraph1 String   @db.Text
+  paragraph2 String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model HomeHero {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  subtitle  String?  @db.Text
+  imageUrl  String?  @db.LongText
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomePlanning {
+  id         Int      @id @default(autoincrement())
+  imageUrl   String?  @db.LongText
+  paragraph1 String?  @db.Text
+  paragraph2 String?  @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model HowItWorksStep {
+  id           Int      @id @default(autoincrement())
+  stepNumber   String
+  title        String
+  description  String   @db.Text
+  iconUrl      String
+  learnMoreUrl String   @default("#")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model HomeStat {
+  id        Int      @id @default(autoincrement())
+  value     String
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomeAdvantage {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  description String   @db.Text
+  iconUrl     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

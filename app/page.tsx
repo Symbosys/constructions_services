@@ -1,65 +1,308 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+interface HomeStep {
+  id?: number;
+  stepNumber: string;
+  title: string;
+  description: string;
+  iconUrl?: string;
+  learnMoreUrl?: string;
+}
+
+interface HomeStat {
+  id?: number;
+  value: string;
+  label: string;
+}
+
+interface HomeAdvantage {
+  id?: number;
+  title: string;
+  description: string;
+  iconUrl?: string;
+}
+
+export default function HomePage() {
+  // Dynamic State matching Express Backend API (http://localhost:3001/home)
+  const [heroCoverImg, setHeroCoverImg] = useState('/assets/images/hero_3d_building_construction.png');
+  const [planningP1, setPlanningP1] = useState(
+    'House of Arch excels in high-precision architectural planning and structural engineering. We deliver comprehensive CAD blueprints, column schedules, lift pit rebar details, and foundation plans tailored to your project\'s exact structural load requirements.'
+  );
+  const [planningP2, setPlanningP2] = useState(
+    'Our systematic planning approach optimizes space usage, ensures full building code compliance, and seamlessly connects architectural aesthetics with civil engineering execution for error-free construction.'
+  );
+
+  const [steps, setSteps] = useState<HomeStep[]>([
+    {
+      stepNumber: '01',
+      title: 'Raise a Request',
+      description: 'Share your vision and requirements. We’ll begin designing your dream project with precision and creativity.',
+      iconUrl: '/assets/icons/trophy.png',
+      learnMoreUrl: '#',
+    },
+    {
+      stepNumber: '02',
+      title: 'Collaborate & Design',
+      description: 'Our team collaborates with you on every detail — creating blueprints that blend style and function.',
+      iconUrl: '/assets/icons/trophy.png',
+      learnMoreUrl: '#',
+    },
+    {
+      stepNumber: '03',
+      title: 'Execute & Deliver',
+      description: 'Watch your vision come to life with expert execution, detailed supervision, and timely delivery.',
+      iconUrl: '/assets/icons/trophy.png',
+      learnMoreUrl: '#',
+    },
+  ]);
+
+  const [stats, setStats] = useState<HomeStat[]>([
+    { value: '14,000+', label: 'Projects Completed' },
+    { value: '140+', label: 'Happy Clients' },
+    { value: '1,500+', label: 'Site Visits' },
+    { value: '1,500+', label: 'Design Concepts' },
+  ]);
+
+  const [advantages, setAdvantages] = useState<HomeAdvantage[]>([
+    {
+      title: 'Efficiency',
+      description: '99% reduction in project design and development time.',
+      iconUrl: '/assets/advantages/Efficiency.avif',
+    },
+    {
+      title: 'Optimization',
+      description: 'AI leads to greater adaptation to user requirements.',
+      iconUrl: '/assets/advantages/optimization.png',
+    },
+    {
+      title: 'Reliability',
+      description: 'The resulting designs have the highest precision and are 100% error-free.',
+      iconUrl: '/assets/advantages/Reliability.png',
+    },
+    {
+      title: 'Usability',
+      description: 'User-friendly and easy to use 24/7 on the cloud, no installation needed.',
+      iconUrl: '/assets/advantages/Usability.png',
+    },
+    {
+      title: 'Flexibility',
+      description: 'Total adaptation to the regulatory and user design criteria in each project.',
+      iconUrl: '/assets/advantages/Flexibility.png',
+    },
+  ]);
+
+  // Mouse Parallax Effect State
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+      const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+      setMousePos({ x: moveX, y: moveY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Fetch Home Data from Express Backend API (http://localhost:3001/home)
+  useEffect(() => {
+    async function fetchHomeData() {
+      try {
+        const response = await fetch('http://localhost:3001/home');
+        if (!response.ok) return;
+        const resData = await response.json();
+
+        if (resData.success && resData.data) {
+          const { hero, planning, steps: apiSteps, stats: apiStats, advantages: apiAdvantages } = resData.data;
+
+          if (hero?.imageUrl) setHeroCoverImg(hero.imageUrl);
+          if (planning?.paragraph1) setPlanningP1(planning.paragraph1);
+          if (planning?.paragraph2) setPlanningP2(planning.paragraph2);
+          if (apiSteps && Array.isArray(apiSteps) && apiSteps.length > 0) setSteps(apiSteps);
+          if (apiStats && Array.isArray(apiStats) && apiStats.length > 0) setStats(apiStats);
+          if (apiAdvantages && Array.isArray(apiAdvantages) && apiAdvantages.length > 0) setAdvantages(apiAdvantages);
+        }
+      } catch (err) {
+        console.warn('Express backend API unreachable, using client defaults:', err);
+      }
+    }
+
+    fetchHomeData();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="main-container">
+      {/* Full-Bleed 3D Building Construction Cover Hero Section */}
+      <section className="hero-cover-section">
+        {/* Full Cover 3D Render Image */}
+        <div className="hero-cover-image-wrapper">
+          <img
+            src={heroCoverImg}
+            alt="3D Architectural Building Construction In Progress"
+            className="hero-cover-img"
+            style={{
+              transform: `scale(1.03) translate(${mousePos.x}px, ${mousePos.y}px)`,
+            }}
+          />
+          <div className="hero-cover-overlay"></div>
+          {/* AI Laser Scanning Line */}
+          <div className="laser-scan-line"></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        {/* Floating Glassmorphism Hero Content Container */}
+        <div className="hero-cover-container">
+          <div className="hero-glass-card">
+            <div className="hero-badge">
+              <span className="badge-dot"></span> Next-Gen AI Architectural Studio
+            </div>
+            <h1 className="hero-title">
+              Designing & Building <span className="gradient-text">Architectural Wonders</span>
+            </h1>
+            <p className="hero-description">
+              Watch your dream project come to life in real-time. We integrate computational AI design, 3D structural modeling, and high-precision civil construction execution.
+            </p>
+            <div className="hero-cta-group">
+              <Link href="/service" className="btn-primary">
+                Explore Services <span className="arrow">→</span>
+              </Link>
+              <Link href="/contact" className="btn-secondary">
+                Get a Quote
+              </Link>
+            </div>
+            <div className="hero-features">
+              <div className="feature-tag">
+                <span className="check-icon">✓</span> 3D Structural Execution
+              </div>
+              <div className="feature-tag">
+                <span className="check-icon">✓</span> Real-Time AI Monitoring
+              </div>
+              <div className="feature-tag">
+                <span className="check-icon">✓</span> 99% Precision Engineering
+              </div>
+            </div>
+          </div>
+
+          {/* Live Floating 3D Construction Stats Badges */}
+          <div className="hero-cover-badges">
+            <div className="floating-badge badge-3d-live">
+              <div className="badge-icon">🏗️</div>
+              <div className="badge-info">
+                <strong>Building In Progress</strong>
+                <span>3D Structural Framing</span>
+              </div>
+            </div>
+
+            <div className="floating-badge badge-3d-ai">
+              <div className="badge-icon">⚡</div>
+              <div className="badge-info">
+                <strong>AI CAD Specs</strong>
+                <span>Live Material Estimation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Services */}
+      <section className="services-section">
+        <div className="services-header">
+          <h1>Our Services</h1>
+        </div>
+
+        <div className="services-grid">
+          <p className="service-item">Architectural Planning</p>
+          <p className="service-item">Construction</p>
+          <p className="service-item">Estimation</p>
+          <p className="service-item">Landscaping</p>
+          <p className="service-item">PMC</p>
+          <p className="service-item">Designing</p>
+          <p className="service-item">Renovation</p>
+          <p className="service-item">Interior</p>
+        </div>
+      </section>
+
+      {/* Service Planning & Structural Blueprints */}
+      <section className="about-section">
+        <div className="about-container">
+          <div className="about-image">
+            <img
+              src="/assets/images/blueprint_structural_plan.png"
+              alt="Architectural Blueprint & Structural Engineering Plan"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="about-badge">
+              <span className="badge-icon">📐</span> Structural CAD & Blueprint Specs
+            </div>
+          </div>
+          <div className="about-text">
+            <h2>Precision Structural Planning & CAD Blueprints</h2>
+            <p dangerouslySetInnerHTML={{ __html: planningP1 }} />
+            <p dangerouslySetInnerHTML={{ __html: planningP2 }} />
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="how-it-works">
+        <h1 className="section-title">How It Works</h1>
+
+        <div className="timeline">
+          {steps.map((step, index) => {
+            const sideClass = index % 2 === 0 ? 'left' : 'right';
+            return (
+              <div key={index} className={`timeline-item ${sideClass}`}>
+                <div className="timeline-icon">
+                  <img
+                    src={step.iconUrl || '/assets/icons/trophy.png'}
+                    alt={step.title}
+                  />
+                </div>
+                <div className="timeline-content">
+                  <span className="step-number">{step.stepNumber}</span>
+                  <h2 className="step-title">{step.title}</h2>
+                  <p>{step.description}</p>
+                  <a href={step.learnMoreUrl || '#'} className="learn-more">
+                    Learn More →
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="stats-section">
+        <div className="stats-container">
+          {stats.map((st, index) => (
+            <div key={index} className="stat-box">
+              <h1>{st.value}</h1>
+              <p>{st.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Advantages Section */}
+      <section className="advantages-section">
+        <h1 className="advantages-title">There are many advantages</h1>
+        <div className="advantage-grid">
+          {advantages.map((adv, index) => (
+            <div key={index} className="advantage-card">
+              <img
+                src={adv.iconUrl || '/assets/advantages/Efficiency.avif'}
+                alt={adv.title}
+                className="advantage-icon"
+              />
+              <div className="advantage-title">{adv.title}</div>
+              <div className="advantage-desc">{adv.description}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
