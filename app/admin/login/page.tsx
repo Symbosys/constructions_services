@@ -1,15 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Login from '../components/Login';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [darkMode, setDarkMode] = useState(true);
 
   const handleSuccess = (email: string) => {
     if (typeof window !== 'undefined') {
-      window.location.href = '/admin';
+      localStorage.setItem('admin_email', email);
     }
+    router.push('/admin/dashboard');
   };
 
   return (

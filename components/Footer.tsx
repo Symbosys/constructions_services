@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { PhoneCall, MapPin, Mail, Building2, ArrowRight } from 'lucide-react';
+import { PhoneCall, MapPin, Mail, ArrowRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -10,18 +10,22 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8 sm:pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Brand & Contact Info Column */}
-          <div className="sm:col-span-2 lg:col-span-4 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-orange-500/20">
-                <Building2 className="w-5 h-5 stroke-[2.5]" />
-              </div>
-              <div>
-                <div className="font-extrabold text-base sm:text-lg tracking-tight text-white leading-none">
-                  Construction <span className="text-orange-500">Solutions</span>
-                </div>
-                <div className="text-[10px] font-bold text-slate-400 tracking-wider uppercase mt-1">
-                  &amp; Services • Architecture
-                </div>
+          <div className="sm:col-span-2 lg:col-span-4 space-y-5">
+            <Link href="/" className="inline-block group overflow-visible">
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xl inline-block transition-transform duration-200">
+                <img
+                  src="/assets/images/logo2.png"
+                  alt="Construction Solutions & Services Logo"
+                  className="h-16 sm:h-20 lg:h-24 w-auto max-w-[320px] sm:max-w-[400px] object-contain transform scale-105 origin-left"
+                  style={{
+                    filter: 'contrast(1.08) brightness(1.02) saturate(1.08)',
+                    WebkitBackfaceVisibility: 'hidden',
+                    backfaceVisibility: 'hidden',
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/images/logo3.png';
+                  }}
+                />
               </div>
             </Link>
 
