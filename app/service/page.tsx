@@ -137,7 +137,7 @@ export default function ServicesPage() {
   const paginatedItems = filteredItems.slice(startIndex, endIndex);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-orange-500 selection:text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-orange-500 selection:text-white pt-6 sm:pt-8 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Modern Hero Section - Light Theme */}
         <section className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-12 lg:p-14 shadow-xl shadow-slate-200/60">
