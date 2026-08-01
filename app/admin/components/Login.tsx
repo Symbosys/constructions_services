@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import apiClient from '../config/apiClient';
+import { adminLoginAction } from '../actions/authActions';
 import {
   Mail,
   Lock,
@@ -51,30 +52,25 @@ export const Login: React.FC<LoginProps> = ({
 
     setLoading(true);
     try {
-      const res = await apiClient.post('/auth/login', { email, password });
-      if (res.data?.success) {
-        const token = res.data?.data?.token;
-        if (token) {
-          localStorage.setItem('user_token', token);
-          localStorage.setItem('token', token);
+      // Server Action execution for login
+      const result = await adminLoginAction(email, password);
+
+      if (result.success) {
+        const userEmail = result.user?.email || email;
+        if (typeof window !== 'undefined') {
+          const fakeToken = `admin_session_${Date.now()}`;
+          localStorage.setItem('user_token', fakeToken);
+          localStorage.setItem('token', fakeToken);
+          localStorage.setItem('admin_email', userEmail);
         }
-        if (onLoginSuccess) onLoginSuccess(res.data?.data?.user?.email || email);
+        if (onLoginSuccess) {
+          onLoginSuccess(userEmail);
+        }
       } else {
-        setError(res.data?.message || 'Authentication failed.');
+        setError(result.message || 'Authentication failed.');
       }
     } catch (err: any) {
-      if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else if (err.response) {
-        setError('Invalid administrative email address or password.');
-      } else {
-        console.warn('Backend login endpoint unavailable, entering offline mode fallback session.');
-        if (password.length >= 4) {
-          if (onLoginSuccess) onLoginSuccess(email);
-        } else {
-          setError('Invalid email address or password.');
-        }
-      }
+      setError(err?.message || 'Server action login error. Please try again.');
     } finally {
       setLoading(false);
     }

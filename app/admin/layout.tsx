@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Sidebar } from './components/Sidebar';
 import { Navbar as AdminNavbar } from './components/Navbar';
+import { adminLogoutAction } from './actions/authActions';
 
 export default function AdminLayout({
   children,
@@ -29,12 +30,15 @@ export default function AdminLayout({
     router.push(`/admin/${tab}`);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await adminLogoutAction();
     if (typeof window !== 'undefined') {
       localStorage.removeItem('user_token');
       localStorage.removeItem('token');
+      localStorage.removeItem('admin_email');
     }
     router.push('/admin/login');
+    router.refresh();
   };
 
   return (
