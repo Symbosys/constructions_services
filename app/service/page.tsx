@@ -92,7 +92,7 @@ export default function ServicesPage() {
       setLoading(true);
       try {
         const res = await getAllServices();
-        if (res.success && res.data && res.data.length > 0) {
+        if (res.success && Array.isArray(res.data) && res.data.length > 0) {
           setItems(
             res.data.map((item) => ({
               id: item.id,

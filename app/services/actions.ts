@@ -85,6 +85,35 @@ export async function getAllServices(): Promise<ActionResult<ServiceItemData[]>>
       console.warn('Prisma findMany services lookup fallback:', dbErr);
     }
 
+    // Auto-seed default services into database if empty
+    if (dbServices.length === 0) {
+      try {
+        for (const seedItem of defaultSeedServices) {
+          await withTimeout(
+            prisma.serviceItem.upsert({
+              where: { title: seedItem.title },
+              update: {},
+              create: {
+                title: seedItem.title,
+                description: seedItem.description,
+                imageUrl: seedItem.imageUrl,
+                category: seedItem.category || 'Architecture',
+              },
+            }),
+            800
+          );
+        }
+        dbServices = await withTimeout(
+          prisma.serviceItem.findMany({
+            orderBy: { id: 'desc' },
+          }),
+          1200
+        );
+      } catch (seedErr) {
+        console.warn('Prisma services auto-seed fallback:', seedErr);
+      }
+    }
+
     if (dbServices.length > 0) {
       const formattedServices: ServiceItemData[] = dbServices.map((item) => ({
         id: item.id,

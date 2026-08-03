@@ -102,7 +102,7 @@ export const ServicesPage: React.FC<ServicesProps> = ({
     setError(null);
     try {
       const res = await getAllServices();
-      if (res.success && res.data && res.data.length > 0) {
+      if (res.success && Array.isArray(res.data)) {
         setServicesList(res.data as ServiceItem[]);
       }
     } catch (err) {
@@ -180,26 +180,22 @@ export const ServicesPage: React.FC<ServicesProps> = ({
       if (editingService) {
         const res = await updateService(editingService.id, payload);
 
-        if (res.success && res.data) {
-          const updatedItem = res.data as ServiceItem;
-          setServicesList((prev) =>
-            prev.map((s) => (s.id === editingService.id ? updatedItem : s))
-          );
-          if (localEditHandler) localEditHandler(updatedItem);
+        if (res.success) {
           showToast('success', res.message || 'Service offering updated in database!');
           setIsModalOpen(false);
+          await fetchServices();
+          if (res.data && localEditHandler) localEditHandler(res.data as ServiceItem);
         } else {
           showToast('error', res.message || 'Failed to update service in database.');
         }
       } else {
         const res = await createService(payload);
 
-        if (res.success && res.data) {
-          const createdItem = res.data as ServiceItem;
-          setServicesList((prev) => [createdItem, ...prev]);
-          if (localAddHandler) localAddHandler(createdItem);
+        if (res.success) {
           showToast('success', res.message || 'New service offering created in database!');
           setIsModalOpen(false);
+          await fetchServices();
+          if (res.data && localAddHandler) localAddHandler(res.data as ServiceItem);
         } else {
           showToast('error', res.message || 'Failed to create service in database.');
         }
@@ -218,10 +214,10 @@ export const ServicesPage: React.FC<ServicesProps> = ({
       const res = await deleteService(id);
       showToast('success', res.message || 'Service offering deleted successfully.');
       if (localDeleteHandler) localDeleteHandler(id);
-      setServicesList((prev) => prev.filter((s) => s.id !== id));
+      await fetchServices();
     } catch (err: any) {
       if (localDeleteHandler) localDeleteHandler(id);
-      setServicesList((prev) => prev.filter((s) => s.id !== id));
+      await fetchServices();
       showToast('success', 'Service offering deleted.');
     } finally {
       setDeletingId(null);

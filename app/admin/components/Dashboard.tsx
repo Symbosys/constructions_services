@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import apiClient from '../config/apiClient';
 import type { ContactMessage, ServiceItem } from '../types/admin';
 import { getAllContactMessages } from '@/app/contact/actions';
+import { getAllServices } from '@/app/services/actions';
 import {
   Zap,
   Wrench,
@@ -72,16 +73,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
         console.warn('Notice loading contact messages in Dashboard:', err);
       }
 
-      // 2. Fetch Services Catalog
+      // 2. Fetch Services Catalog via Server Action
       try {
         if (isMounted) {
           if (initialServices.length > 0) {
             setServicesList(initialServices);
           } else {
             try {
-              const srvRes = await apiClient.get('/services');
-              if (srvRes.data?.success && Array.isArray(srvRes.data.data?.items) && srvRes.data.data.items.length > 0) {
-                setServicesList(srvRes.data.data.items);
+              const srvRes = await getAllServices();
+              if (srvRes.success && Array.isArray(srvRes.data) && srvRes.data.length > 0) {
+                setServicesList(srvRes.data as ServiceItem[]);
               } else {
                 setServicesList(fallbackServices);
               }
