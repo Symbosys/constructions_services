@@ -29,7 +29,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   const [messagesList, setMessagesList] = useState<ContactMessage[]>(initialMessages);
   const [servicesList, setServicesList] = useState<ServiceItem[]>(initialServices);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fallbackServices: ServiceItem[] = [
     {
@@ -59,16 +59,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
     let isMounted = true;
 
     async function loadDashboardData() {
-      setIsLoading(true);
 
       // 1. Fetch Contact Messages from Database via Server Action
       try {
         const actionRes = await getAllContactMessages();
         if (isMounted) {
-          if (actionRes.success && actionRes.data && actionRes.data.length > 0) {
+          if (actionRes.success && Array.isArray(actionRes.data)) {
             setMessagesList(actionRes.data as ContactMessage[]);
-          } else if (initialMessages.length > 0) {
-            setMessagesList(initialMessages);
           }
         }
       } catch (err) {
@@ -105,7 +102,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
     return () => {
       isMounted = false;
     };
-  }, []); // Run ONLY once on mount to prevent infinite re-renders
+  }, []);
 
   const unreadCount = messagesList.filter((m) => m.status === 'unread').length;
 

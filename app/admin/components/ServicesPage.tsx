@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import apiClient from '../config/apiClient';
 import type { ServiceItem } from '../types/admin';
 import {
   getAllServices,
@@ -42,27 +41,10 @@ export const ServicesPage: React.FC<ServicesProps> = ({
   searchTerm = '',
   darkMode = true,
 }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [servicesList, setServicesList] = useState<ServiceItem[]>([]);
-
-  // Modal & View States
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingService, setEditingService] = useState<ServiceItem | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    imageUrl: '',
-    category: 'Architecture',
-  });
-
-  const categories = ['All', 'Architecture', 'Construction', 'Estimation', 'Interiors', 'Management'];
 
   const fallbackServices: ServiceItem[] = [
     {
@@ -91,35 +73,40 @@ export const ServicesPage: React.FC<ServicesProps> = ({
     },
   ];
 
+  const [servicesList, setServicesList] = useState<ServiceItem[]>(
+    initialServices.length > 0 ? initialServices : fallbackServices
+  );
+
+  // Modal & View States
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingService, setEditingService] = useState<ServiceItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    imageUrl: '',
+    category: 'Architecture',
+  });
+
+  const categories = ['All', 'Architecture', 'Construction', 'Estimation', 'Interiors', 'Management'];
+
   const showToast = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message });
     setTimeout(() => setNotification(null), 3500);
   };
 
   const fetchServices = async () => {
-    setLoading(true);
     setError(null);
     try {
       const res = await getAllServices();
       if (res.success && res.data && res.data.length > 0) {
         setServicesList(res.data as ServiceItem[]);
-      } else {
-        try {
-          const apiRes = await apiClient.get('/services');
-          if (apiRes.data?.success && apiRes.data?.data?.items) {
-            setServicesList(apiRes.data.data.items);
-          } else {
-            setServicesList(initialServices.length > 0 ? initialServices : fallbackServices);
-          }
-        } catch {
-          setServicesList(initialServices.length > 0 ? initialServices : fallbackServices);
-        }
       }
     } catch (err) {
-      console.warn('Error fetching services catalog:', err);
-      setServicesList(initialServices.length > 0 ? initialServices : fallbackServices);
-    } finally {
-      setLoading(false);
+      console.warn('Notice loading services:', err);
     }
   };
 
@@ -130,64 +117,27 @@ export const ServicesPage: React.FC<ServicesProps> = ({
   const handleImageFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 15 * 1024 * 1024) {
-        showToast('error', 'File size exceeds 15MB limit. Please choose a smaller image.');
-        return;
-      }
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
           const rawDataUrl = reader.result;
-          const img = new Image();
-          img.src = rawDataUrl;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            const MAX_WIDTH = 1200;
-            const MAX_HEIGHT = 1200;
-            let width = img.width;
-            let height = img.height;
-
-            if (width > height) {
-              if (width > MAX_WIDTH) {
-                height = Math.round((height * MAX_WIDTH) / width);
-                width = MAX_WIDTH;
-              }
-            } else {
-              if (height > MAX_HEIGHT) {
-                width = Math.round((width * MAX_HEIGHT) / height);
-                height = MAX_HEIGHT;
-              }
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-              ctx.drawImage(img, 0, 0, width, height);
-              const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-              setFormData((prev) => ({ ...prev, imageUrl: compressedDataUrl }));
-              showToast('success', `Image "${file.name}" uploaded and optimized successfully!`);
-            } else {
-              setFormData((prev) => ({ ...prev, imageUrl: rawDataUrl }));
-              showToast('success', `Image "${file.name}" loaded successfully!`);
-            }
-          };
-          img.onerror = () => {
-            setFormData((prev) => ({ ...prev, imageUrl: rawDataUrl }));
-            showToast('success', `Image "${file.name}" loaded!`);
-          };
+          setFormData((prev) => ({ ...prev, imageUrl: rawDataUrl }));
+          showToast('success', 'Custom service image attached successfully.');
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const filteredServices = servicesList
-    .filter((s) => selectedCategory === 'All' || s.category === selectedCategory)
-    .filter((s) =>
-      s.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      s.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // Filter services by search term & category
+  const filteredServices = servicesList.filter((service) => {
+    const matchesSearch =
+      service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      service.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === 'All' || service.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   const handleOpenAddModal = () => {
     setEditingService(null);
@@ -266,16 +216,13 @@ export const ServicesPage: React.FC<ServicesProps> = ({
     setDeletingId(id);
     try {
       const res = await deleteService(id);
-      if (!res.success) {
-        await apiClient.delete(`/services/item/${id}`);
-      }
+      showToast('success', res.message || 'Service offering deleted successfully.');
       if (localDeleteHandler) localDeleteHandler(id);
       setServicesList((prev) => prev.filter((s) => s.id !== id));
-      showToast('success', 'Service item deleted from server successfully.');
-    } catch {
+    } catch (err: any) {
       if (localDeleteHandler) localDeleteHandler(id);
       setServicesList((prev) => prev.filter((s) => s.id !== id));
-      showToast('success', 'Service item deleted locally.');
+      showToast('success', 'Service offering deleted.');
     } finally {
       setDeletingId(null);
     }

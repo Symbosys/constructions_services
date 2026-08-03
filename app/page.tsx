@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { getHomeData } from '@/app/admin/home/actions';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { getHomeData } from "@/app/admin/home/actions";
 import {
   Sparkles,
   ArrowRight,
@@ -13,8 +13,8 @@ import {
   Trophy,
   Zap,
   Award,
-  Users
-} from 'lucide-react';
+  Users,
+} from "lucide-react";
 
 interface HomeStep {
   id?: number;
@@ -38,62 +38,69 @@ interface HomeAdvantage {
 
 export default function HomePage() {
   const [heroCoverImg, setHeroCoverImg] = useState(
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
   );
   const [heroTitle, setHeroTitle] = useState(
-    'Designing & Building Architectural Wonders'
+    "Designing & Building Architectural Wonders",
   );
   const [heroSubtitle, setHeroSubtitle] = useState(
-    'Watch your dream project come to life in real-time. We integrate computational AI design, 3D structural modeling, and high-precision civil construction execution.'
+    "Watch your dream project come to life in real-time. We integrate computational AI design, 3D structural modeling, and high-precision civil construction execution.",
   );
   const [planningP1, setPlanningP1] = useState(
-    'Construction Solutions & Services excels in high-precision architectural planning and structural engineering. We deliver comprehensive CAD blueprints, column schedules, lift pit rebar details, and foundation plans tailored to your project’s exact structural load requirements.'
+    "Construction Solutions & Services excels in high-precision architectural planning and structural engineering. We deliver comprehensive CAD blueprints, column schedules, lift pit rebar details, and foundation plans tailored to your project’s exact structural load requirements.",
   );
   const [planningP2, setPlanningP2] = useState(
-    'Our systematic planning approach optimizes space usage, ensures full building code compliance, and seamlessly connects architectural aesthetics with civil engineering execution for error-free construction.'
+    "Our systematic planning approach optimizes space usage, ensures full building code compliance, and seamlessly connects architectural aesthetics with civil engineering execution for error-free construction.",
   );
 
   const [steps] = useState<HomeStep[]>([
     {
-      stepNumber: '01',
-      title: 'Raise a Request',
-      description: 'Share your vision and requirements. We’ll begin designing your dream project with precision and creativity.',
+      stepNumber: "01",
+      title: "Raise a Request",
+      description:
+        "Share your vision and requirements. We’ll begin designing your dream project with precision and creativity.",
     },
     {
-      stepNumber: '02',
-      title: 'Collaborate & Design',
-      description: 'Our team collaborates with you on every detail — creating blueprints that blend style and function.',
+      stepNumber: "02",
+      title: "Collaborate & Design",
+      description:
+        "Our team collaborates with you on every detail — creating blueprints that blend style and function.",
     },
     {
-      stepNumber: '03',
-      title: 'Execute & Deliver',
-      description: 'Watch your vision come to life with expert execution, detailed supervision, and timely delivery.',
+      stepNumber: "03",
+      title: "Execute & Deliver",
+      description:
+        "Watch your vision come to life with expert execution, detailed supervision, and timely delivery.",
     },
   ]);
 
   const [stats, setStats] = useState<HomeStat[]>([
-    { value: '150+', label: 'Luxury Projects Delivered' },
-    { value: '100%', label: 'Safety & Compliance Audit' },
-    { value: '15 Yrs', label: 'Architectural Excellence' },
-    { value: '1,500+', label: 'Design Concepts' },
+    { value: "150+", label: "Luxury Projects Delivered" },
+    { value: "100%", label: "Safety & Compliance Audit" },
+    { value: "15 Yrs", label: "Architectural Excellence" },
+    { value: "1,500+", label: "Design Concepts" },
   ]);
 
   const [advantages] = useState<HomeAdvantage[]>([
     {
-      title: 'Efficiency',
-      description: '99% reduction in project design and development time through computational CAD modeling.',
+      title: "Efficiency",
+      description:
+        "99% reduction in project design and development time through computational CAD modeling.",
     },
     {
-      title: 'Optimization',
-      description: 'Adaptive architectural blueprints tailored to exact site load requirements.',
+      title: "Optimization",
+      description:
+        "Adaptive architectural blueprints tailored to exact site load requirements.",
     },
     {
-      title: 'Reliability',
-      description: 'Highest precision designs that are 100% error-free and IS-code compliant.',
+      title: "Reliability",
+      description:
+        "Highest precision designs that are 100% error-free and IS-code compliant.",
     },
     {
-      title: 'Usability',
-      description: 'Seamless cloud collaboration and real-time 3D building model previews.',
+      title: "Usability",
+      description:
+        "Seamless cloud collaboration and real-time 3D building model previews.",
     },
   ]);
 
@@ -114,7 +121,7 @@ export default function HomePage() {
           }
         }
       } catch (err) {
-        console.warn('Failed to load Home data via Server Action:', err);
+        console.warn("Failed to load Home data via Server Action:", err);
       }
     }
 
@@ -162,13 +169,16 @@ export default function HomePage() {
 
               <div className="pt-4 flex flex-wrap items-center gap-4 text-xs font-bold text-slate-700">
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 3D Structural Execution
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 3D
+                  Structural Execution
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> IS-Code Compliant
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> IS-Code
+                  Compliant
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 100% Precision Engineering
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 100%
+                  Precision Engineering
                 </div>
               </div>
             </div>
@@ -181,13 +191,17 @@ export default function HomePage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
-                      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+                      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-lg">
-                  <p className="text-xs font-black text-slate-900">Live 3D Building Construction</p>
-                  <p className="text-[11px] text-orange-600 font-bold mt-0.5">High-Precision Structural Framing</p>
+                  <p className="text-xs font-black text-slate-900">
+                    Live 3D Building Construction
+                  </p>
+                  <p className="text-[11px] text-orange-600 font-bold mt-0.5">
+                    High-Precision Structural Framing
+                  </p>
                 </div>
               </div>
             </div>
@@ -201,20 +215,21 @@ export default function HomePage() {
               Our Core Expertise
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              Delivering full-spectrum architectural design, structural engineering, and construction services.
+              Delivering full-spectrum architectural design, structural
+              engineering, and construction services.
             </p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              'Architectural Planning',
-              'Civil Construction',
-              'BOQ Cost Estimation',
-              'Landscape Architecture',
-              'Project Management (PMC)',
-              'Interior Designing',
-              'Building Renovation',
-              'Structural Audit',
+              "Architectural Planning",
+              "Civil Construction",
+              "BOQ Cost Estimation",
+              "Landscape Architecture",
+              "Project Management (PMC)",
+              "Interior Designing",
+              "Building Renovation",
+              "Structural Audit",
             ].map((service, idx) => (
               <Link
                 key={idx}
@@ -243,7 +258,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
-                      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=740&q=80';
+                      "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=740&q=80";
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
@@ -277,7 +292,8 @@ export default function HomePage() {
               How We Turn Visions Into Reality
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              A structured, 3-step workflow engineered for quality, transparency, and timely delivery.
+              A structured, 3-step workflow engineered for quality,
+              transparency, and timely delivery.
             </p>
           </div>
 
@@ -327,7 +343,8 @@ export default function HomePage() {
               Why Partner With Us?
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              We bring computational innovation, absolute transparency, and structural safety to every project.
+              We bring computational innovation, absolute transparency, and
+              structural safety to every project.
             </p>
           </div>
 
@@ -338,10 +355,22 @@ export default function HomePage() {
                 className="p-6 rounded-3xl border border-slate-200/90 bg-white space-y-3 shadow-sm hover:shadow-xl transition-all duration-300"
               >
                 <div className="w-10 h-10 rounded-2xl bg-orange-500/10 text-orange-600 flex items-center justify-center">
-                  {idx === 0 ? <Zap className="w-5 h-5" /> : idx === 1 ? <Building2 className="w-5 h-5" /> : idx === 2 ? <Award className="w-5 h-5" /> : <Users className="w-5 h-5" />}
+                  {idx === 0 ? (
+                    <Zap className="w-5 h-5" />
+                  ) : idx === 1 ? (
+                    <Building2 className="w-5 h-5" />
+                  ) : idx === 2 ? (
+                    <Award className="w-5 h-5" />
+                  ) : (
+                    <Users className="w-5 h-5" />
+                  )}
                 </div>
-                <h3 className="text-base font-black text-slate-900">{adv.title}</h3>
-                <p className="text-xs font-medium text-slate-600 leading-relaxed">{adv.description}</p>
+                <h3 className="text-base font-black text-slate-900">
+                  {adv.title}
+                </h3>
+                <p className="text-xs font-medium text-slate-600 leading-relaxed">
+                  {adv.description}
+                </p>
               </div>
             ))}
           </div>
