@@ -40,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: 'Live' },
     { id: 'services', label: 'Services Manager', icon: Wrench, badge: 'CRUD' },
-    { id: 'home', label: 'Home & 3D Config', icon: Home },
+    // { id: 'home', label: 'Home & 3D Config', icon: Home },
     { id: 'contact', label: 'Inquiries & Leads', icon: Mail, badge: 'Leads' },
   ];
 
