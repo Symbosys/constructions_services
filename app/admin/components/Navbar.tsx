@@ -58,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               {getTabTitle(currentTab)}
             </h1>
             <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">
-              <Building2 className="w-3 h-3" /> ShareWalls CMS
+              <Building2 className="w-3 h-3" /> Construction Solutions CMS
             </span>
           </div>
           <p className={`text-xs font-medium hidden md:block mt-0.5 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>

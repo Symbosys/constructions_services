@@ -29,8 +29,8 @@ export const Login: React.FC<LoginProps> = ({
   darkMode = true,
   setDarkMode,
 }) => {
-  const [email, setEmail] = useState('admin@sharewalls.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState('');
@@ -118,16 +118,28 @@ export const Login: React.FC<LoginProps> = ({
               <span>Security Standard v2.4</span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-black text-2xl flex items-center justify-center shadow-lg shadow-orange-500/30">
-                <Layers className="w-6 h-6" />
+            <div className="space-y-4">
+              <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xl inline-block">
+                <img
+                  src="/assets/images/logo2.png"
+                  alt="Construction Solutions & Services Logo"
+                  className="h-14 sm:h-16 w-auto max-w-[260px] object-contain"
+                  style={{
+                    filter: 'contrast(1.08) brightness(1.02) saturate(1.08)',
+                    WebkitBackfaceVisibility: 'hidden',
+                    backfaceVisibility: 'hidden',
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/assets/images/logo3.png';
+                  }}
+                />
               </div>
               <div>
-                <h1 className="font-black text-3xl text-white tracking-tight">
-                  Share<span className="text-orange-500">Walls</span>
+                <h1 className="font-black text-2xl text-white tracking-tight leading-snug">
+                  Construction <span className="text-orange-500">Solutions</span>{" "}&amp; Services
                 </h1>
-                <p className="text-[11px] font-bold text-orange-400 uppercase tracking-widest mt-0.5">
-                  Architectural & Civil CMS
+                <p className="text-[11px] font-bold text-orange-400 uppercase tracking-widest mt-1">
+                  Architectural &amp; Civil CMS
                 </p>
               </div>
             </div>
@@ -142,7 +154,7 @@ export const Login: React.FC<LoginProps> = ({
               <Building2 className="w-5 h-5 text-orange-400 shrink-0" />
               <div>
                 <h4 className="text-xs font-bold text-white">Structural Catalog CMS</h4>
-                <p className="text-[11px] text-slate-300">Live service offering & blueprint control</p>
+                <p className="text-[11px] text-slate-300">Live service offering &amp; blueprint control</p>
               </div>
             </div>
             <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/60 backdrop-blur-md">
@@ -155,7 +167,7 @@ export const Login: React.FC<LoginProps> = ({
           </div>
 
           <div className="text-[11px] text-slate-400 font-mono flex items-center justify-between border-t border-slate-800/60 pt-4">
-            <span>© 2026 ShareWalls Portal</span>
+            <span>© 2026 Construction Solutions &amp; Services</span>
             <span className="text-emerald-400 font-bold">TLS 1.3 Active</span>
           </div>
         </div>
@@ -192,6 +204,7 @@ export const Login: React.FC<LoginProps> = ({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@sharewalls.com"
+                    autoComplete="off"
                     className={`w-full pl-10 pr-4 py-3 border rounded-2xl text-sm transition duration-200 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 font-medium ${
                       darkMode
                         ? 'bg-slate-950/70 border-slate-800 text-white placeholder-slate-500'
@@ -225,6 +238,7 @@ export const Login: React.FC<LoginProps> = ({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
+                    autoComplete="new-password"
                     className={`w-full pl-10 pr-11 py-3 border rounded-2xl text-sm transition duration-200 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 font-medium ${
                       darkMode
                         ? 'bg-slate-950/70 border-slate-800 text-white placeholder-slate-500'

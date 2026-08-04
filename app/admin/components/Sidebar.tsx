@@ -68,19 +68,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
           }`}
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-orange-500 via-amber-500 to-yellow-500 flex items-center justify-center shadow-lg shadow-orange-500/25 ring-2 ring-orange-400/20 text-white font-black text-xl">
-              <Layers className="w-5 h-5 stroke-[2.5]" />
+            <div className="bg-white p-1.5 rounded-xl border border-slate-200 shadow-md shrink-0">
+              <img
+                src="/assets/images/logo2.png"
+                alt="Construction Solutions & Services Logo"
+                className="h-9 w-auto max-w-[120px] object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/assets/images/logo3.png';
+                }}
+              />
             </div>
             <div>
               <div
-                className={`font-extrabold text-xl tracking-tight leading-none ${
+                className={`font-extrabold text-sm tracking-tight leading-tight ${
                   darkMode ? 'text-white' : 'text-slate-900'
                 }`}
               >
-                Share<span className="text-orange-500">Walls</span>
+                Construction <span className="text-orange-500">Solutions</span>
               </div>
-              <div className="flex items-center gap-1.5 mt-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-orange-500 bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-1.5 mt-1">
+                <span className="text-[9px] font-bold uppercase tracking-widest text-orange-500 bg-orange-500/10 border border-orange-500/30 px-1.5 py-0.5 rounded-full">
                   Admin CMS v2.4
                 </span>
               </div>
