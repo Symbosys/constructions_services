@@ -34,6 +34,30 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function TwitterIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+    </svg>
+  );
+}
+
+function PinterestIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+      <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.367 18.592 0 12.017 0z" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="bg-slate-950 text-slate-300 border-t border-slate-800">
@@ -77,7 +101,7 @@ export default function Footer() {
               <div className="flex items-start gap-2.5 text-slate-400 py-0.5">
                 <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                 <span>
-                  Harmu Housing Basant Bihar Colony B1, Ranchi, Jharkhand 834002
+                  Harmu Housing Colony Road Number-1/B, Harmu, Ranchi, Jharkhand 834002
                 </span>
               </div>
               <a
@@ -92,13 +116,13 @@ export default function Footer() {
             </div>
 
             {/* Social Media Links */}
-            <div className="pt-3 flex items-center gap-3">
+            <div className="pt-3 flex flex-wrap items-center gap-2.5">
               <a
                 href="https://www.linkedin.com/in/construction-solutions-services/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
               >
                 <LinkedinIcon className="w-4 h-4 text-orange-500 shrink-0" />
                 <span>LinkedIn</span>
@@ -108,10 +132,40 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram Profile"
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
               >
                 <InstagramIcon className="w-4 h-4 text-orange-500 shrink-0" />
                 <span>Instagram</span>
+              </a>
+              <a
+                href="https://x.com/cs_services25"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter Profile"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
+              >
+                <TwitterIcon className="w-4 h-4 text-orange-500 shrink-0" />
+                <span>Twitter</span>
+              </a>
+              <a
+                href="https://www.facebook.com/constructionsolutionsservices/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook Profile"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
+              >
+                <FacebookIcon className="w-4 h-4 text-orange-500 shrink-0" />
+                <span>Facebook</span>
+              </a>
+              <a
+                href="https://in.pinterest.com/contructionsolutionsservices/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Pinterest Profile"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-orange-400 hover:border-orange-500/50 hover:bg-slate-800/80 transition-all duration-200 text-xs font-semibold shadow-sm"
+              >
+                <PinterestIcon className="w-4 h-4 text-orange-500 shrink-0" />
+                <span>Pinterest</span>
               </a>
             </div>
           </div>
@@ -273,6 +327,33 @@ export default function Footer() {
               className="hover:text-orange-400 transition p-1"
             >
               <InstagramIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="https://x.com/cs_services25"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter Profile"
+              className="hover:text-orange-400 transition p-1"
+            >
+              <TwitterIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="https://www.facebook.com/constructionsolutionsservices/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook Profile"
+              className="hover:text-orange-400 transition p-1"
+            >
+              <FacebookIcon className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="https://in.pinterest.com/contructionsolutionsservices/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Pinterest Profile"
+              className="hover:text-orange-400 transition p-1"
+            >
+              <PinterestIcon className="w-3.5 h-3.5" />
             </a>
             <span>•</span>
             <Link
