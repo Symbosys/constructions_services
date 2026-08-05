@@ -121,7 +121,7 @@ export const Login: React.FC<LoginProps> = ({
             <div className="space-y-4">
               <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xl inline-block">
                 <img
-                  src="/assets/images/logo2.png"
+                  src="/assets/images/logo3.png"
                   alt="Construction Solutions & Services Logo"
                   className="h-14 sm:h-16 w-auto max-w-[260px] object-contain"
                   style={{
@@ -130,7 +130,7 @@ export const Login: React.FC<LoginProps> = ({
                     backfaceVisibility: 'hidden',
                   }}
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/assets/images/logo3.png';
+                    (e.target as HTMLImageElement).src = '/assets/images/logo2.png';
                   }}
                 />
               </div>

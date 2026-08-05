@@ -28,7 +28,7 @@ export default function Navbar() {
           {/* Official High-Resolution Brand Logo - Large & Zoomed By Default */}
           <Link href="/" className="flex items-center group shrink-0 py-1 overflow-visible">
             <img
-              src="/assets/images/logo2.png"
+              src="/assets/images/logo3.png"
               alt="Construction Solutions & Services Logo"
               className="h-14 sm:h-16 md:h-20 lg:h-22 w-auto max-w-[280px] sm:max-w-[340px] md:max-w-[420px] object-contain transform scale-110 sm:scale-115 origin-left transition-transform duration-200 drop-shadow-sm"
               style={{
@@ -37,7 +37,7 @@ export default function Navbar() {
                 backfaceVisibility: 'hidden',
               }}
               onError={(e) => {
-                (e.target as HTMLImageElement).src = '/assets/images/logo3.png';
+                (e.target as HTMLImageElement).src = '/assets/images/logo2.png';
               }}
             />
           </Link>

@@ -70,11 +70,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="flex items-center gap-3">
             <div className="bg-white p-1.5 rounded-xl border border-slate-200 shadow-md shrink-0">
               <img
-                src="/assets/images/logo2.png"
+                src="/assets/images/logo3.png"
                 alt="Construction Solutions & Services Logo"
                 className="h-9 w-auto max-w-[120px] object-contain"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/assets/images/logo3.png';
+                  (e.target as HTMLImageElement).src = '/assets/images/logo2.png';
                 }}
               />
             </div>

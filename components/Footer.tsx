@@ -68,7 +68,7 @@ export default function Footer() {
             <Link href="/" className="inline-block group overflow-visible">
               <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xl inline-block transition-transform duration-200">
                 <img
-                  src="/assets/images/logo2.png"
+                  src="/assets/images/logo3.png"
                   alt="Construction Solutions & Services Logo"
                   className="h-16 sm:h-20 lg:h-24 w-auto max-w-[320px] sm:max-w-[400px] object-contain transform scale-105 origin-left"
                   style={{
@@ -78,7 +78,7 @@ export default function Footer() {
                   }}
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
-                      "/assets/images/logo3.png";
+                      "/assets/images/logo2.png";
                   }}
                 />
               </div>
